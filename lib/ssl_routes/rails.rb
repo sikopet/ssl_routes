@@ -39,7 +39,7 @@ module SslRoutes
         routes = Rails.application.routes
         options = routes.recognize_path request.path, {:method => request.env['REQUEST_METHOD']}
         current, target = determine_protocols(options)
-        if (current != target && !request.xhr? && request.get?)
+        if (options[self.parameter].present? && current != target && !request.xhr? && request.get?)
           flash.keep
           response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
           response.headers['Pragma'] = 'no-cache'
